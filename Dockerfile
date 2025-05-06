@@ -16,17 +16,17 @@ RUN conda create -n styletts python=3.10 -y
 ENV PATH="/opt/conda/envs/styletts/bin:$PATH"
 ENV CONDA_DEFAULT_ENV=styletts
 
-# Copiar código
+# ⬇️ Copiar todo el contenido actual
 WORKDIR /workspace
-COPY StyleTTS2-serverless-ready /workspace/StyleTTS2-serverless-ready
+COPY . /workspace
 
-# ⬅️ Asegurar que Python vea el módulo
-ENV PYTHONPATH="/workspace/StyleTTS2-serverless-ready/StyleTTS2:$PYTHONPATH"
+# ✅ Agregar PYTHONPATH para que reconozca StyleTTS
+ENV PYTHONPATH="/workspace/StyleTTS2:$PYTHONPATH"
 
 # Instalar dependencias
-WORKDIR /workspace/StyleTTS2-serverless-ready/StyleTTS2
+WORKDIR /workspace/StyleTTS2
 RUN pip install -r requirements.txt
 RUN pip install runpod torchaudio requests
 
-# Ejecutar handler
-CMD ["python", "/workspace/StyleTTS2-serverless-ready/runpod_handler_styletts2_auto.py"]
+# ⬅️ Ejecutar handler correcto
+CMD ["python", "/workspace/runpod_handler_styletts2_auto.py"]
